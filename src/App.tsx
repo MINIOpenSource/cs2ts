@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "@fluentui/react-components";
 import { HeaderBar } from "./components/HeaderBar";
 import { HistoryCard } from "./components/HistoryCard";
 import { InventoryCard } from "./components/InventoryCard";
@@ -757,6 +758,15 @@ export default function App({ isDark, onToggleTheme }: AppProps) {
           模拟器仅供参考，请以实际报价为准，不构成参考，也不倡导或支持相关行为。
         </div>
         <div>交流加群：706066207</div>
+        <div>
+          <Link
+            href="https://github.com/MINIOpenSource/cs2ts"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            GitHub 仓库
+          </Link>
+        </div>
       </footer>
     </div>
   );

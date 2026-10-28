@@ -18,6 +18,10 @@ venv/
 .env.*
 !.env.example
 
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+
 # Editor and OS files
 .vscode/*
 !.vscode/extensions.json

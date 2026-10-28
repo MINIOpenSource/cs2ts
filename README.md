@@ -1,6 +1,6 @@
 # CS2 终端机模拟器
 
-[![Deploy to GitHub Pages](https://github.com/MINIOpenSource/cs2ts/actions/workflows/deploy.yml/badge.svg)](https://github.com/MINIOpenSource/cs2ts/actions/workflows/deploy.yml)
+[![Deploy Site](https://github.com/MINIOpenSource/cs2ts/actions/workflows/deploy.yml/badge.svg)](https://github.com/MINIOpenSource/cs2ts/actions/workflows/deploy.yml)
 
 一个基于 React 与 TypeScript 的 Counter-Strike 2 终端机模拟器。项目复刻创世终端机与毁灭之手终端机的开箱、报价和买断流程，并提供磨损定价、库存管理、炼金合同、价格计算与最优停时分析。
 
@@ -9,7 +9,7 @@
 - GitHub Pages：<https://miniopensource.github.io/cs2ts/>
 - Cloudflare：<https://cs2ts.pages.dev/> · <https://cs2.vmw.app/> · <https://cs2.miniopensource.com/>
 
-GitHub Pages 使用仓库默认地址；上述 Cloudflare 入口由现有托管独立提供，不受 Pages 工作流影响。
+GitHub Pages 使用仓库默认地址；上述 Cloudflare 入口由同一工作流通过 Wrangler 同步发布，并保留现有自定义域名。
 
 ## 功能
 
@@ -29,6 +29,7 @@ GitHub Pages 使用仓库默认地址；上述 Cloudflare 入口由现有托管�
 - Vite
 - Fluent UI React Components
 - GitHub Actions + GitHub Pages
+- Cloudflare Pages + Wrangler
 
 ## 本地开发
 
@@ -52,15 +53,17 @@ npm run dev
 
 ## 部署
 
-推送到 `main` 分支后，[`deploy.yml`](.github/workflows/deploy.yml) 会自动执行类型检查、构建并部署到 GitHub Pages。也可以在 Actions 页面手动触发 `workflow_dispatch`。
+推送到 `main` 分支后，[`deploy.yml`](.github/workflows/deploy.yml) 会自动执行类型检查、构建，并同时发布到 GitHub Pages 和 Cloudflare Pages。也可以在 Actions 页面手动触发 `workflow_dispatch`。
 
-首次部署时，工作流会尝试为仓库启用 GitHub Pages，并将发布源设置为 GitHub Actions。若组织策略禁止自动启用，请在仓库 **Settings → Pages → Build and deployment** 中将 **Source** 设为 **GitHub Actions**，然后重新运行工作流。
+Cloudflare Pages 使用仓库 Secrets 中的 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID`，通过 Wrangler 发布到 `cs2ts` 项目，现有 `cs2ts.pages.dev`、`cs2.vmw.app`、`cs2.miniopensource.com` 域名保持不变。
+
+首次部署 GitHub Pages 时，工作流会尝试为仓库启用 Pages，并将发布源设置为 GitHub Actions。若组织策略禁止自动启用，请在仓库 **Settings → Pages → Build and deployment** 中将 **Source** 设为 **GitHub Actions**，然后重新运行工作流。
 
 ## 项目结构
 
 ```text
 .
-├── .github/workflows/deploy.yml   # GitHub Pages 构建与部署
+├── .github/workflows/deploy.yml   # GitHub Pages 与 Cloudflare Pages 构建部署
 ├── reference/
 │   └── engine.py                  # Python 参考实现（算法与定价模型对照）
 ├── src/
